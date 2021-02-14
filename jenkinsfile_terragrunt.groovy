@@ -20,12 +20,15 @@ pipeline {
         }
 
         stage('Plan'){
-            sh "cd ${myname}; pwd"
-            sh "pwd"
-            dir("${params.products}"){
-                sh 'pwd'
+            steps {
+                sh "cd ${myname}; pwd"
+                sh "pwd"
+                dir("${params.products}"){
+                    sh 'pwd'
+                }
+                echo "My name is == ${params.myname}"
+
             }
-            echo "My name is == ${params.myname}"
 
         }
     }
