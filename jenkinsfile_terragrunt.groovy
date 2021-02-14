@@ -25,7 +25,7 @@ pipeline {
                 sh "pwd"
                 dir("${params.products}"){
                     dir("${params.environment}"){
-                        sh 'export PATH=/usr/local/bin/terragrunt:$PATH'
+                        sh 'export PATH=/usr/local/bin:$PATH'
                         sh 'echo $PATH'
                         sh 'pwd'
                         sh 'terragrunt plan'
