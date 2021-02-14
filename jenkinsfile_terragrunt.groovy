@@ -9,6 +9,8 @@ pipeline {
     parameters{
         string(defaultValue: 'vinit', description: 'Product', name: 'myname', trim: false)
         choice(choices: 'analytics\ncallstats', description: 'Products', name: 'products')
+        choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment')
+
     }
     stages {
         stage('Preregs&Checkout') {
