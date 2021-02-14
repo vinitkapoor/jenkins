@@ -25,7 +25,7 @@ pipeline {
                 sh "pwd"
                 dir("${params.products}"){
                     dir("${params.environment}"){
-                        sh 'echo '$PATH''
+                        sh 'echo $PATH'
                         sh 'pwd'
                         sh 'terragrunt plan'
                     }
