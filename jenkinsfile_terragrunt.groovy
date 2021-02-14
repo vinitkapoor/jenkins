@@ -13,7 +13,7 @@ pipeline {
 
     }
     environment {
-        PATH="/usr/local/bin/terragrunt:${PATH}"
+        PATH="/usr/local/bin:${PATH}"
     }
     stages {
         stage('Preregs&Checkout') {
