@@ -4,6 +4,7 @@ import groovy.json.*
 def myname = "/Users/vinitkapoor"
 def products_dir = "products"
 def environment_dir = "environment"
+def plan_success = true
 pipeline {
     agent any
     parameters{
@@ -24,20 +25,25 @@ pipeline {
 
         stage('Plan'){
             steps {
-                sh "cd ${myname}; pwd"
-                sh "pwd"
-                dir("${params.products}"){
-                    dir("${params.environment}"){
-                        sh 'export PATH=/usr/local/bin:$PATH'
-                        sh 'echo $PATH'
-                        sh 'pwd'
-                        sh 'export PATH=$PATH; terragrunt plan'
+                try {
+                    sh "cd ${myname}; pwd"
+                    sh "pwd"
+                    dir("${params.products}"){
+                        dir("${params.environment}"){
+                            sh 'export PATH=/usr/local/bin:$PATH'
+                            sh 'echo $PATH'
+                            sh 'pwd'
+                            sh 'export PATH=$PATH; terragrunt plan'
+
+                        }
 
                     }
-
+                    echo "My name is == ${params.myname}"
+                } catch (Excpetion e){
+                    plan_success = false
+                    echo 'plan failed'
                 }
-                echo "My name is == ${params.myname}"
-
+                echo 'plan success'
             }
 
         }
