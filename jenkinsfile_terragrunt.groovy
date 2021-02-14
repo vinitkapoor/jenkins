@@ -41,10 +41,16 @@ pipeline {
             }
             post {
                 failure {
-                    plan_success = 'false'
+                    script {
+                        plan_success = 'false'
+                    }
+
                 }
                 success {
-                    plan_success = 'true'
+                    script {
+                        plan_success = 'true'
+                    }
+
                 }
             }
         }
