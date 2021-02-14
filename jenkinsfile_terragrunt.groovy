@@ -4,7 +4,7 @@ import groovy.json.*
 def myname = "/Users/vinitkapoor"
 def products_dir = "products"
 def environment_dir = "environment"
-def plan_success = true
+def plan_success = 'true'
 pipeline {
     agent any
     parameters{
@@ -41,10 +41,10 @@ pipeline {
             }
             post {
                 failure {
-                    plan_success = false
+                    plan_success = 'false'
                 }
                 success {
-                    plan_success = true
+                    plan_success = 'true''
                 }
             }
         }
