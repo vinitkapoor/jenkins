@@ -44,7 +44,7 @@ pipeline {
                     plan_success = 'false'
                 }
                 success {
-                    plan_success = 'true''
+                    plan_success = 'true'
                 }
             }
         }
