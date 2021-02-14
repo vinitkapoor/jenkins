@@ -12,6 +12,9 @@ pipeline {
         choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment')
 
     }
+    environment {
+        PATH="/usr/local/bin/terragrunt:${PATH}"
+    }
     stages {
         stage('Preregs&Checkout') {
             steps {
@@ -29,6 +32,7 @@ pipeline {
                         sh 'echo $PATH'
                         sh 'pwd'
                         sh 'terragrunt plan'
+
                     }
 
                 }
