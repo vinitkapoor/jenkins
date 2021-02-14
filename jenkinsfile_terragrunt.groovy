@@ -44,13 +44,15 @@ pipeline {
                     script {
                         plan_success = 'false'
                     }
+                    echo 'Result of Plan stage execution = ${plan_success}'
                 }
                 success {
                     script {
                         plan_success = 'true'
                     }
+                    echo 'Result of Plan stage execution = ${plan_success}'
                 }
-                echo 'Result of Plan stage execution = ${plan_success}'
+
             }
         }
     }
