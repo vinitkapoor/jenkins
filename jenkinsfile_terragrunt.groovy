@@ -31,7 +31,7 @@ pipeline {
                         sh 'export PATH=/usr/local/bin:$PATH'
                         sh 'echo $PATH'
                         sh 'pwd'
-                        sh 'terragrunt plan'
+                        sh 'export PATH=$PATH; terragrunt plan'
 
                     }
 
