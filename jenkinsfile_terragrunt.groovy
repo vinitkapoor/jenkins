@@ -26,6 +26,7 @@ pipeline {
                 dir("${params.products}"){
                     dir("${params.environment}"){
                         sh 'pwd'
+                        sh 'terragrunt plan'
                     }
 
                 }
