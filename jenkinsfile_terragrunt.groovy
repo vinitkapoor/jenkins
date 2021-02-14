@@ -25,27 +25,28 @@ pipeline {
 
         stage('Plan'){
             steps {
-                try {
-                    sh "cd ${myname}; pwd"
-                    sh "pwd"
-                    dir("${params.products}"){
-                        dir("${params.environment}"){
-                            sh 'export PATH=/usr/local/bin:$PATH'
-                            sh 'echo $PATH'
-                            sh 'pwd'
-                            sh 'export PATH=$PATH; terragrunt plan'
-
-                        }
+                sh "cd ${myname}; pwd"
+                sh "pwd"
+                dir("${params.products}") {
+                    dir("${params.environment}") {
+                        sh 'export PATH=/usr/local/bin:$PATH'
+                        sh 'echo $PATH'
+                        sh 'pwd'
+                        sh 'export PATH=$PATH; terragrunt plan'
 
                     }
-                    echo "My name is == ${params.myname}"
-                } catch (Excpetion e){
-                    plan_success = false
-                    echo 'plan failed'
-                }
-                echo 'plan success'
-            }
 
+                }
+                echo "My name is == ${params.myname}"
+            }
+            post {
+                failure {
+                    plan_success = false
+                }
+                success {
+                    plan_success = true
+                }
+            }
         }
     }
 }
