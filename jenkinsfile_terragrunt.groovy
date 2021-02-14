@@ -24,7 +24,10 @@ pipeline {
                 sh "cd ${myname}; pwd"
                 sh "pwd"
                 dir("${params.products}"){
-                    sh 'pwd'
+                    dir("${params.environment}"){
+                        sh 'pwd'
+                    }
+
                 }
                 echo "My name is == ${params.myname}"
 
