@@ -7,12 +7,12 @@ def environment_dir = "environment"
 def plan_success = 'true'
 
 def secrets = [
-        [path: 'secret/hello', engineVersion: 2, secretValues: [
+        [path: 'secret/test', engineVersion: 2, secretValues: [
                 [envVar: 'testing', vaultKey: 'value_one']]]
 ]
 
 def configuration = [vaultUrl: 'http://127.0.0.1:8200',
-                     vaultCredentialId: 'vault-approle',
+                     vaultCredentialId: 'vault-app-role',
                      engineVersion: 2]
 
 
