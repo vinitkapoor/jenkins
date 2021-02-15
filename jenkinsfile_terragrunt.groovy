@@ -36,7 +36,7 @@ pipeline {
 
         stage('Plan'){
             steps {
-                withVault([vaultSecrets: secrets]) {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'echo $testing'
                 }
                 sh "cd ${myname}; pwd"
