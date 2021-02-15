@@ -5,6 +5,17 @@ def myname = "/Users/vinitkapoor"
 def products_dir = "products"
 def environment_dir = "environment"
 def plan_success = 'true'
+
+def secrets = [
+        [path: 'secret/hello', engineVersion: 2, secretValues: [
+                [envVar: 'testing', vaultKey: 'value_one']]]
+]
+
+def configuration = [vaultUrl: 'http://127.0.0.1:8200',
+                     vaultCredentialId: 'vault-approle',
+                     engineVersion: 2]
+
+
 pipeline {
     agent any
     parameters{
@@ -35,9 +46,10 @@ pipeline {
                         sh 'export PATH=$PATH; terragrunt plan'
 
                     }
-
                 }
-                echo "My name is == ${params.myname}"
+                withVault([vaultSecrets: secrets]) {
+                        sh 'echo $testing'
+                }
             }
             post {
                 failure {
