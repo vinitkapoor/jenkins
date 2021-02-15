@@ -26,6 +26,8 @@ pipeline {
     }
     environment {
         PATH="/usr/local/bin:${PATH}"
+        VAULT_TOKEN="s.e5DVJ8caCRmsunOjIxGjdSMl"
+        VAULT_ADDR="http://127.0.0.1:8200"
     }
     stages {
         stage('Preregs&Checkout') {
