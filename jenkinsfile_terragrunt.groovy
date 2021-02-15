@@ -7,7 +7,7 @@ def environment_dir = "environment"
 def plan_success = 'true'
 
 def secrets = [
-        [path: 'secret/data/test', engineVersion: 2, secretValues: [
+        [path: 'secret/test', engineVersion: 2, secretValues: [
                 [envVar: 'testing', vaultKey: 'value_one']]]
 ]
 
@@ -37,7 +37,7 @@ pipeline {
         stage('Plan'){
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'echo $testing'
+                    sh 'echo $value_one'
                 }
                 sh "cd ${myname}; pwd"
                 sh "pwd"
