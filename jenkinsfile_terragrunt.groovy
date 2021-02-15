@@ -36,6 +36,9 @@ pipeline {
 
         stage('Plan'){
             steps {
+                withVault([vaultSecrets: secrets]) {
+                    sh 'echo $testing'
+                }
                 sh "cd ${myname}; pwd"
                 sh "pwd"
                 dir("${params.products}") {
@@ -47,9 +50,7 @@ pipeline {
 
                     }
                 }
-                withVault([vaultSecrets: secrets]) {
-                        sh 'echo $testing'
-                }
+
             }
             post {
                 failure {
