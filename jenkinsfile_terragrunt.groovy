@@ -26,7 +26,7 @@ pipeline {
     }
     environment {
         PATH="/usr/local/bin:${PATH}"
-        VAULT_TOKEN="s.e5DVJ8caCRmsunOjIxGjdSMl"
+        VAULT_TOKEN="s.F5pQov8apty53YCW1rf3gmmu"
         VAULT_ADDR="http://127.0.0.1:8200"
     }
     stages {
