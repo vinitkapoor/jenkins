@@ -47,6 +47,7 @@ pipeline {
                 }*/
                 script {
                     terragrunt_dir = ${params.products}
+                    /*
                     if (${params.environment} != "none") {
                         terragrunt_dir = terragrunt_dir + ${params.environment}
                         //echo "${terragrunt_dir}"
@@ -54,8 +55,10 @@ pipeline {
                     else {
                         //execute the terragrunt
                     }
+
+                     */
                 }
-                echo "terragrunt dir = ${terragrunt_dir}"
+                //echo "terragrunt dir = ${terragrunt_dir}"
                 sh "cd ${myname}; pwd"
                 sh "pwd"
                 dir("${params.products}") {
