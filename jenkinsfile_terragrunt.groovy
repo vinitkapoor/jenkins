@@ -39,7 +39,7 @@ pipeline {
         stage('Plan'){
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'echo ${env.testing}'
+                    sh 'echo ${testing}'
                 }
                 sh "cd ${myname}; pwd"
                 sh "pwd"
