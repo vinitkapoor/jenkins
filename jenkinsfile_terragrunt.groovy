@@ -48,14 +48,16 @@ pipeline {
                 script {
                     terragrunt_dir = "${params.products}"
 
-                    if ("${params.environment}" == "none") {
-                        terragrunt_dir = terragrunt_dir + "${params.environment}"
+                    if ("${params.environment}" != "none") {
+                        terragrunt_dir = terragrunt_dir + "/"+ "${params.environment}"
                         //echo "${terragrunt_dir}"
+                        if("${params.region}" != "none"){
+                            terragrunt_dir = terragrunt_dir + "/"+ "${params.region}"
+                            if("${params.resource}" != "none"){
+                                terragrunt_dir = terragrunt_dir + "/"+ "${params.resource}"
+                            }
+                        }
                     }
-                    else {
-                        //execute the terragrunts
-                    }
-
 
                 }
                 echo "terragrunt dir = ${terragrunt_dir}"
