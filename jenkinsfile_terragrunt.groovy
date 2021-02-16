@@ -46,7 +46,7 @@ pipeline {
                     echo '$testing'
                 }*/
                 script {
-                    //terragrunt_dir = ${params.products}
+                    terragrunt_dir = "${params.products}"
                     echo "${params.products}"
                     /*
                     if (${params.environment} != "none") {
