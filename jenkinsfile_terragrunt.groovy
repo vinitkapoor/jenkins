@@ -7,7 +7,7 @@ def environment_dir = "environment"
 def plan_success = 'true'
 
 def secrets = [
-        [path: 'secret/test', engineVersion: 2, secretValues: [
+        [path: 'secret/data/test', engineVersion: 2, secretValues: [
                 [envVar: 'testing', vaultKey: 'vault-app-role']]]
 ]
 
