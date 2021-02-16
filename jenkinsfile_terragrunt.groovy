@@ -8,7 +8,7 @@ def plan_success = 'true'
 
 def secrets = [
         [path: 'secret/test', engineVersion: 2, secretValues: [
-                [envVar: 'testing', vaultKey: 'value_one']]]
+                [envVar: 'testing', vaultKey: 'vault-app-role']]]
 ]
 
 def configuration = [vaultUrl: 'http://127.0.0.1:8200',
