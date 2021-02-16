@@ -20,8 +20,8 @@ pipeline {
     parameters{
         choice(choices: 'analytics\ncallstats', description: 'Products', name: 'products')
         choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment')
-        choice(choices: 'ap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region')
-        choice(choices: 'vcn-standard\nsubnet', description: 'Resources', name: 'resource')
+        choice(choices: 'none\nap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region')
+        choice(choices: 'none\nvcn-standard\nsubnet', description: 'Resources', name: 'resource')
     }
     environment {
         PATH="/usr/local/bin:${PATH}"
