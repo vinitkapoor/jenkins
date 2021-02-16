@@ -5,6 +5,7 @@ def myname = "/Users/vinitkapoor"
 def products_dir = "products"
 def environment_dir = "environment"
 def plan_success = 'true'
+def terragrunt_dir
 
 def secrets = [
         [path: 'secret/test', engineVersion: 2, secretValues: [
@@ -21,8 +22,9 @@ pipeline {
     parameters{
         string(defaultValue: 'vinit', description: 'Product', name: 'myname', trim: false)
         choice(choices: 'analytics\ncallstats', description: 'Products', name: 'products')
-        choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment')
-
+        choice(choices: 'none\nproduction\nacceptance', description: 'Environment', name: 'environment')
+        choice(choices: 'none\nap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region')
+        choice(choices: 'none\nvcn-standard\nsubnet', description: 'Resources', name: 'resource')
     }
     environment {
         PATH="/usr/local/bin:${PATH}"
@@ -41,6 +43,16 @@ pipeline {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'echo ${testing}'
                     echo '$testing'
+                }
+                script {
+                    terragrunt_dir = ${params.products}
+                    if (${params.environment != "none"}) {
+                        terragrunt_dir = terragrunt_dir + ${params.environment}
+                        echo "$terragrunt_dir"
+                    }
+                    else {
+                        //execute the terragrunt
+                    }
                 }
                 sh "cd ${myname}; pwd"
                 sh "pwd"
