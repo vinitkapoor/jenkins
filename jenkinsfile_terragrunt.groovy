@@ -5,7 +5,7 @@ def myname = "/Users/vinitkapoor"
 def products_dir = "products"
 def environment_dir = "environment"
 def plan_success = 'true'
-def terragrunt_dir
+def terragrunt_dir = ""
 
 def secrets = [
         [path: 'secret/test', engineVersion: 2, secretValues: [
@@ -40,10 +40,11 @@ pipeline {
 
         stage('Plan'){
             steps {
+                /*
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'echo ${testing}'
                     echo '$testing'
-                }
+                }*/
                 script {
                     terragrunt_dir = ${params.products}
                     if (${params.environment != "none"}) {
