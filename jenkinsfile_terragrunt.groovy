@@ -61,9 +61,9 @@ pipeline {
 
                 sh 'export PATH=/usr/local/bin:$PATH'
                 sh 'echo $PATH'
-                sh 'export PATH=$PATH; terragrunt plan'
+                //sh 'export PATH=$PATH; terragrunt plan'
 
-                sh "cd ${terragrunt_dir}; export PATH=/usr/local/bin:$PATH; sterragrunt plan"
+                sh "cd ${terragrunt_dir}; export PATH=/usr/local/bin:$PATH; terragrunt plan"
 
                 /*
                 dir("${params.products}") {
