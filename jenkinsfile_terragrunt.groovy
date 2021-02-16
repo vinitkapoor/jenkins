@@ -1,9 +1,7 @@
 import org.yaml.snakeyaml.*
 import groovy.json.*
 
-def myname = "/Users/vinitkapoor"
-def products_dir = "products"
-def environment_dir = "environment"
+
 def plan_success = 'true'
 def terragrunt_dir = ""
 
@@ -20,7 +18,6 @@ def configuration = [vaultUrl: 'http://127.0.0.1:8200',
 pipeline {
     agent any
     parameters{
-        string(defaultValue: 'vinit', description: 'Product', name: 'myname', trim: false)
         choice(choices: 'analytics\ncallstats', description: 'Products', name: 'products')
         choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment')
         choice(choices: 'ap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region')
@@ -61,8 +58,14 @@ pipeline {
 
                 }
                 echo "terragrunt dir = ${terragrunt_dir}"
-                sh "cd ${myname}; pwd"
-                sh "pwd"
+
+                sh 'export PATH=/usr/local/bin:$PATH'
+                sh 'echo $PATH'
+                sh 'export PATH=$PATH; terragrunt plan'
+
+                sh "cd ${terragrunt_dir}; export PATH=/usr/local/bin:$PATH; sterragrunt plan"
+
+                /*
                 dir("${params.products}") {
                     dir("${params.environment}") {
                         sh 'export PATH=/usr/local/bin:$PATH'
@@ -72,6 +75,8 @@ pipeline {
 
                     }
                 }
+
+                 */
 
             }
             post {
