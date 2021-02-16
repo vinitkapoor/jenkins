@@ -40,6 +40,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'echo ${testing}'
+                    echo '$testing'
                 }
                 sh "cd ${myname}; pwd"
                 sh "pwd"
