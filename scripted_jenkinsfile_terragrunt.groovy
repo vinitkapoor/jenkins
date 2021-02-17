@@ -33,17 +33,17 @@ node() {
 
         //checkout_all_repos(infra_git_creds, workflow_repo, workflow_repo_branch, infra_repo, infra_branch, infra_dir)
 
-        git branch: 'main', changelog: false, poll: false, url: 'https://github.com/vinitkapoor/jenkins.git'
-
-        //replace above git repo with the one from auto_hashicorp.. define Gitcredentails to access it
+        //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/vinitkapoor/jenkins.git'
+        git branch: 'develop', changelog: false, credentialsId: 'git-8x8-ssh', poll: false, url: 'git@github.com:8x8Cloud/terraform-oci-required-tags.git'
 
     }
 
     stage('Plan'){
+        /*
         withVault([configuration: configuration, vaultSecrets: secrets]) {
             sh 'echo ${testing}'
             echo '$testing'
-        }
+        }*/
 
         terragrunt_dir = "${params.products}"
 
