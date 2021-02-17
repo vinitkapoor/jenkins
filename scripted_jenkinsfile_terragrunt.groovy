@@ -65,7 +65,11 @@ node() {
         sh 'echo $PATH'
         //sh 'export PATH=$PATH; terragrunt plan'
 
-        sh "cd ${terragrunt_dir}; export PATH=/usr/local/bin:$PATH; terragrunt plan"
+        sh '''
+            cd ${terragrunt_dir}; 
+            export PATH=/usr/local/bin:$PATH; 
+            terragrunt plan
+        '''
 
         /*
         dir("${params.products}") {
