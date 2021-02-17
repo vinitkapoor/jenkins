@@ -32,16 +32,17 @@ pipeline {
         stage('Preregs&Checkout') {
             steps {
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/vinitkapoor/jenkins.git'
+                //replace above git repo with the one from auto_hashicorp.. define Gitcredentails to access it
             }
         }
 
         stage('Plan'){
             steps {
-                /*
+
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'echo ${testing}'
                     echo '$testing'
-                }*/
+                }
                 script {
                     terragrunt_dir = "${params.products}"
 
