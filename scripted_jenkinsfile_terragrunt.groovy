@@ -70,6 +70,7 @@ node() {
             export PATH=/usr/local/bin:$PATH;
             cp test/provider.tf ./test-provider.tf;
              
+            terraform init
             terraform plan -var-file="test/testing.auto.tfvars" --out tfplan.binary;
             terraform show -json tfplan.binary > tfplan.json
             rm ./test-provider.tf
