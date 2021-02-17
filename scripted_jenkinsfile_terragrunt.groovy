@@ -93,6 +93,7 @@ node() {
     stage('Check Policies'){
         opaStatus = sh (
                 script: ''' 
+                    export PATH=/usr/local/bin:$PATH;
                     opa eval --format pretty --data terraform.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
