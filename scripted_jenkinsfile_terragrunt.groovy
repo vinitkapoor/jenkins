@@ -94,7 +94,7 @@ node() {
         opaStatus = sh (
                 script: ''' 
                     export PATH=/usr/local/bin:$PATH;
-                    opa eval --format pretty --data terraform.rego --input tfplan.json "data.terraform.analysis.authz"
+                    opa eval --format pretty --data registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
         ).trim()
