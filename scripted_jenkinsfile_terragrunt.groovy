@@ -25,7 +25,7 @@ properties([
 ])
 
 
-node('executor_1_label') {
+node() {
 
     stage('Preregs&Checkout'){
         //
