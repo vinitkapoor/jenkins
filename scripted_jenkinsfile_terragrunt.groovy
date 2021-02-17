@@ -64,11 +64,15 @@ node() {
         sh 'export PATH=/usr/local/bin:$PATH'
         sh 'echo $PATH'
         //sh 'export PATH=$PATH; terragrunt plan'
+        //cd ${terragrunt_dir};
 
-        sh '''
-            cd ${terragrunt_dir}; 
-            export PATH=/usr/local/bin:$PATH; 
-            terragrunt plan
+        sh '''   
+            export PATH=/usr/local/bin:$PATH;
+            cp test/provider.tf ./test-provider.tf;
+             
+            terraform plan -var-file="test/testing.auto.tfvars" --out tfplan.binary;
+            terraform show -json tfplan.binary > tfplan.json
+            rm ./test-provider.tf
         '''
 
         /*
@@ -86,6 +90,13 @@ node() {
     }
 
     stage('Check Policies'){
+        opaStatus = sh (
+                script: ''' 
+                    opa eval --format pretty --data terraform.rego --input tfplan.json "data.terraform.analysis.authz"
+                ''',
+                returnStdout: true
+        ).trim()
+        echo "OPA status == ${opaStatus}"
 
     }
 
