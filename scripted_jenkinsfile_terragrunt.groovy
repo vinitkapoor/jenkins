@@ -141,7 +141,7 @@ node() {
                     returnStdout: true
 
             echo "OPA status == ${opaStatus}"
-        } catch {Exception e} {
+        } catch (Exception e) {
             echo "Exception occured"
 
         }
