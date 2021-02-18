@@ -44,12 +44,14 @@ if (params.POLICY_BRANCH != null){
 }
 
 
-node() {
-
-    WORKSPACE = sh (
+WORKSPACE = sh (
         script: '''pwd''',
         returnStdout: true
-    ).trim()
+).trim()
+policy_dir = "${WORKSPACE}/policy"
+
+node() {
+
 
     policy_dir = "${WORKSPACE}/policy"
     policy_git_creds = "git-8x8-ssh"
