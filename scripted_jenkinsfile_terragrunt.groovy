@@ -136,10 +136,15 @@ node() {
     }
 
     stage('Check Policies'){
-        opaStatus = sh script: "${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json \"data.terraform.analysis.authz\"",
-                        returnStdout: true
+        try {
+            opaStatus = sh script: "${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json \"data.terraform.analysis.authz\"",
+                    returnStdout: true
 
-        echo "OPA status == ${opaStatus}"
+            echo "OPA status == ${opaStatus}"
+        } catch {Exception e} {
+            echo "Exception occured"
+
+        }
 
     }
 
