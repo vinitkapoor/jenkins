@@ -138,6 +138,7 @@ node() {
     stage('Check Policies'){
         policy_dir = "${WORKSPACE}/policy"
         new_var = "This is new var"
+        sh "${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json \"data.terraform.analysis.authz\""
         opaStatus = sh (
                 script: ''' 
                     echo ${WORKSPACE};
@@ -146,6 +147,7 @@ node() {
                 ''',
                 returnStdout: true
         ).trim()
+
         echo "OPA status == ${opaStatus}"
 
     }
