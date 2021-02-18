@@ -138,6 +138,7 @@ node() {
     stage('Check Policies'){
         opaStatus = sh (
                 script: ''' 
+                    echo ${policy_dir};
                     ${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
