@@ -20,7 +20,7 @@ properties([
                 choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment'),
                 choice(choices: 'none\nap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region'),
                 choice(choices: 'none\nvcn-standard\nsubnet', description: 'Resources', name: 'resource'),
-                string(name: 'POLICY_GIT_PROJECT', defaultValue: '', description: ''),
+                string(name: 'POLICY_GIT_PROJECT', defaultValue: 'git@github.com:8x8/auto_gitops_oci_opa_policies.git', description: ''),
                 string(name: 'POLICY_BRANCH', defaultValue: 'master', description: '')
         ])
 ])
