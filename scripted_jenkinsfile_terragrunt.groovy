@@ -63,7 +63,10 @@ node() {
         //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/vinitkapoor/jenkins.git'
         git branch: 'develop', changelog: false, credentialsId: 'git-8x8-ssh', poll: false, url: 'git@github.com:8x8Cloud/terraform-oci-required-tags.git'
 
-        sh 'curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_amd64'
+        sh '''
+            curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_amd64;
+            chmod +x ${WORKSPACE}/opa
+        '''
 
         // Policy repo checkout
         sh "mkdir -p ${policy_dir}"
@@ -135,7 +138,7 @@ node() {
     stage('Check Policies'){
         opaStatus = sh (
                 script: ''' 
-                    opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
+                    ${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
         ).trim()
