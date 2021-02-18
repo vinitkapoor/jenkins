@@ -44,14 +44,12 @@ if (params.POLICY_BRANCH != null){
 }
 
 
-WORKSPACE = sh (
-        script: '''pwd''',
-        returnStdout: true
-).trim()
-policy_dir = "${WORKSPACE}/policy"
-
 node() {
 
+    WORKSPACE = sh (
+        script: '''pwd''',
+        returnStdout: true
+    ).trim()
 
     policy_dir = "${WORKSPACE}/policy"
     policy_git_creds = "git-8x8-ssh"
@@ -138,6 +136,7 @@ node() {
     }
 
     stage('Check Policies'){
+        policy_dir = "${WORKSPACE}/policy"
         opaStatus = sh (
                 script: ''' 
                     echo ${policy_dir};
