@@ -139,7 +139,7 @@ node() {
         policy_dir = "${WORKSPACE}/policy"
         opaStatus = sh (
                 script: ''' 
-                    echo ${policy_dir};
+                    echo ${WORKSPACE};
                     ${WORKSPACE}/opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
