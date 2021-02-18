@@ -1,7 +1,6 @@
 import org.yaml.snakeyaml.*
 import groovy.json.*
 
-
 def plan_success = 'true'
 def terragrunt_dir = ""
 
@@ -20,12 +19,40 @@ properties([
                 choice(choices: 'analytics\ncallstats', description: 'Products', name: 'products'),
                 choice(choices: 'production\nacceptance', description: 'Environment', name: 'environment'),
                 choice(choices: 'none\nap-mumbai-1\nap-melburne-1', description: 'Region', name: 'region'),
-                choice(choices: 'none\nvcn-standard\nsubnet', description: 'Resources', name: 'resource')
+                choice(choices: 'none\nvcn-standard\nsubnet', description: 'Resources', name: 'resource'),
+                string(name: 'POLICY_GIT_PROJECT', defaultValue: '', description: ''),
+                string(name: 'POLICY_BRANCH', defaultValue: 'master', description: '')
         ])
 ])
 
+policy_repo = params.POLICY_GIT_PROJECT
+default_policy_repo = "git@github.com:8x8/auto_gitops_oci_opa_policies.git"
+// Using the git repo/branch
+if (params.POLICY_GIT_PROJECT != null){
+    policy_repo = params.POLICY_GIT_PROJECT
+} else {
+    policy_repo = default_policy_repo
+}
+
+policy_branch = ""
+default_policy_branch = "master"
+// Using the git repo/branch
+if (params.POLICY_BRANCH != null){
+    policy_branch = params.POLICY_BRANCH
+} else {
+    policy_branch = default_policy_branch
+}
+
 
 node() {
+
+    WORKSPACE = sh (
+        script: '''pwd''',
+        returnStdout: true
+    ).trim()
+
+    policy_dir = "${WORKSPACE}/policy"
+    policy_git_creds = "git-8x8-ssh"
 
     stage('Preregs&Checkout'){
         //
@@ -38,6 +65,19 @@ node() {
 
         sh 'curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_amd64'
 
+        // Policy repo checkout
+        sh "mkdir -p ${policy_dir}"
+        dir(policy_dir) {
+            // Policy repo
+            echo "${policy_repo}"
+            echo "${policy_branch}"
+            echo "${policy_git_creds}"
+            git(
+                    url: policy_repo,
+                    branch: policy_branch,
+                    credentialsId: policy_git_creds
+            )
+        }
     }
 
     stage('Plan'){
@@ -95,8 +135,7 @@ node() {
     stage('Check Policies'){
         opaStatus = sh (
                 script: ''' 
-                    export PATH=/usr/local/bin:$PATH;
-                    opa eval --format pretty --data registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
+                    opa eval --format pretty --data ${policy_dir}/registered_tags.rego --input tfplan.json "data.terraform.analysis.authz"
                 ''',
                 returnStdout: true
         ).trim()
