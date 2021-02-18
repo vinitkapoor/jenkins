@@ -36,6 +36,8 @@ node() {
         //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/vinitkapoor/jenkins.git'
         git branch: 'develop', changelog: false, credentialsId: 'git-8x8-ssh', poll: false, url: 'git@github.com:8x8Cloud/terraform-oci-required-tags.git'
 
+        sh 'curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_amd64'
+
     }
 
     stage('Plan'){
