@@ -69,7 +69,7 @@ node() {
         sh "mkdir -p ${policy_dir}"
         dir(policy_dir) {
             // Policy repo
-            echo "${policy_repo}"
+            echo "policy repo is : ${policy_repo}"
             echo "${policy_branch}"
             echo "${policy_git_creds}"
             git(
